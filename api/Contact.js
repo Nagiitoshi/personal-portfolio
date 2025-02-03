@@ -26,7 +26,7 @@ export const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setButtonText("Enviando...");
-        let response = await fetch("https://endil-portfolio.vercel.app/contact", {
+        let response = await fetch("https://endil-portfolio.vercel.app/api/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
