@@ -33,7 +33,7 @@ export const Contact = () => {
             },
             body: JSON.stringify(formDetails),
         });
-        setButtonText("Send");
+        setButtonText("enviado");
         let result = await response.json();
         setFormDetails(formInitialDetails);
         if (result.code == 200) {
