@@ -5,12 +5,22 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 
 const app = express();
-app.use(cors());
+
+
+app.use(cors({
+    origin: "https://endil-portfolio.vercel.app/",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"]
+}));
+
 app.use(express.json());
 app.use("/", router);
-app.listen(5000, () => console.log("Server Running"));
-console.log(process.env.EMAIL_USER);
-console.log(process.env.EMAIL_PASS);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server Running on port ${PORT}`));
+
+console.log("Email User:", process.env.EMAIL_USER);
+console.log("Email Pass:", process.env.EMAIL_PASS ? " Configurado" : " Não Configurado");
 
 const contactEmail = nodemailer.createTransport({
     service: 'gmail',
@@ -22,31 +32,36 @@ const contactEmail = nodemailer.createTransport({
 
 contactEmail.verify((error) => {
     if (error) {
-        console.log(error);
+        console.log("Erro ao conectar ao servidor de e-mail:", error);
     } else {
-        console.log("Ready to Send");
+        console.log("Pronto para enviar e-mails!");
     }
 });
 
+// 🔹 Rota de contato
 router.post("/contact", (req, res) => {
-    const name = req.body.firstName + req.body.lastName;
-    const email = req.body.email;
-    const message = req.body.message;
-    const phone = req.body.phone;
+    const { firstName, lastName, email, message, phone } = req.body;
+    const name = `${firstName} ${lastName}`;
+
     const mail = {
         from: name,
         to: process.env.EMAIL_USER,
-        subject: "Contact Form Submission - Portfolio",
-        html: `<p>Name: ${name}</p>
-           <p>Email: ${email}</p>
-           <p>Phone: ${phone}</p>
-           <p>Message: ${message}</p>`,
+        subject: "Novo contato no portfólio!",
+        html: `
+           <p><strong>Nome:</strong> ${name}</p>
+           <p><strong>Email:</strong> ${email}</p>
+           <p><strong>Telefone:</strong> ${phone}</p>
+           <p><strong>Mensagem:</strong> ${message}</p>
+        `,
     };
+
     contactEmail.sendMail(mail, (error) => {
         if (error) {
-            res.json(error);
+            console.error("Erro ao enviar e-mail:", error);
+            res.status(500).json({ success: false, message: "Erro ao enviar e-mail, tente novamente." });
         } else {
-            res.json({ code: 200, status: "Message Sent" });
+            console.log("E-mail enviado com sucesso!");
+            res.json({ success: true, message: "Mensagem enviada com sucesso!" });
         }
     });
 });
