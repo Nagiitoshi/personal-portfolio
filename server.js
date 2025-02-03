@@ -8,10 +8,14 @@ const app = express();
 
 
 app.use(cors({
-    origin: "https://endil-portfolio.vercel.app/",
+    origin: "https://endil-portfolio.vercel.app",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"]
 }));
+
+router.get("/contact", (req, res) => {
+    res.json({ success: true, message: "API funcionando!" });
+});
 
 app.use(express.json());
 app.use("/", router);
