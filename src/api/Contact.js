@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../assets/img/contact-img.svg";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
+import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
     const formInitialDetails = {
@@ -26,21 +27,30 @@ export const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setButtonText("Enviando...");
-        let response = await fetch("https://endil-portfolio.vercel.app/api/contact", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify(formDetails),
+
+        
+        const templateParams = {
+            from_name: `${formDetails.firstName} ${formDetails.lastName}`,
+            email: formDetails.email,
+            phone: formDetails.phone,
+            message: formDetails.message
+        };
+
+        emailjs.send(
+            process.env.REACT_APP_EMAILJS_SERVICE_ID,
+            process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+            templateParams,
+            process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+        ).then((response) => {
+            console.log("Email enviado com sucesso!", response.status, response.text);
+            setFormDetails(formInitialDetails);
+            setStatus({ success: true, message: 'Mensagem enviada com sucesso!' });
+        }).catch((err) => {
+            console.error("Erro ao enviar email:", err);
+            setStatus({ success: false, message: 'Ocorreu um erro, tente novamente mais tarde.' });
         });
-        setButtonText("enviado");
-        let result = await response.json();
-        setFormDetails(formInitialDetails);
-        if (result.code == 200) {
-            setStatus({ succes: true, message: 'Message sent successfully' });
-        } else {
-            setStatus({ succes: false, message: 'Something went wrong, please try again later.' });
-        }
+
+        setButtonText("Enviar");
     };
 
     return (
@@ -74,7 +84,7 @@ export const Contact = () => {
                                                 <input type="tel" value={formDetails.phone} placeholder="Número de Telefone" onChange={(e) => onFormUpdate('phone', e.target.value)} />
                                             </Col>
                                             <Col size={12} className="px-1">
-                                                <textarea rows="6" value={formDetails.message} placeholder="Message" onChange={(e) => onFormUpdate('message', e.target.value)}></textarea>
+                                                <textarea rows="6" value={formDetails.message} placeholder="Mensagem" onChange={(e) => onFormUpdate('message', e.target.value)}></textarea>
                                                 <button type="submit"><span>{buttonText}</span></button>
                                             </Col>
                                             {
