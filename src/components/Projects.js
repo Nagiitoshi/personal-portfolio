@@ -6,22 +6,24 @@ import projImg3 from "../assets/img/project-img3.png";
 import colorSharp2 from "../assets/img/color-sharp2.png";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
+import { Line } from "react-bootstrap-icons";
 
 export const Projects = () => {
 
     const projects = [
         {
-            title: "Business Startup",
+            title: "E-commerce Moderno",
             description: "Design & Development",
             imgUrl: projImg1,
         },
         {
-            title: "Business Startup",
+            title: "Landing Page",
             description: "Design & Development",
             imgUrl: projImg2,
+            link: "https://nagi-barbershop.vercel.app/",
         },
         {
-            title: "Business Startup",
+            title: "App Mobile de salão de beleza",
             description: "Design & Development",
             imgUrl: projImg3,
         },
@@ -112,18 +114,20 @@ export const Projects = () => {
                                                     <h1 style={{
                                                         color: "rgb(201, 197, 255)",
                                                         textAlign: "center"
-                                                    }}> 📝  BlogTech - Um Blog Moderno Sobre Tecnologia</h1>
-                                                    O BlogTech é um blog moderno focado em tecnologia, desenvolvido com Next.js para proporcionar carregamento rápido e otimização para SEO. A interface responsiva e estilizada foi construída com TailwindCSS, garantindo uma experiência fluida e agradável para os leitores.
+                                                    }}>💈 Nagi's Barber - Landing Page para Barbearia</h1>
+                                                    A Nagi's Barber é uma landing page moderna e elegante desenvolvida para uma barbearia estilosa. O projeto foi criado com foco em conversão, proporcionando uma navegação direta e uma seção de agendamento intuitiva para atrair novos clientes. A interface responsiva foi construída com <strong>HTML5, CSS3 e JavaScript</strong>, ideal para portfólios ou negócios locais.
 
                                                     🔧 Tecnologias utilizadas:
-                                                    <span style={{ color: "rgb(230, 0, 230)" }}>Next.js</span>,{" "}
-                                                    <span style={{ color: "rgb(230, 0, 230)" }}>TailwindCSS</span>
+                                                    <span style={{ color: "rgb(230, 0, 230)" }}>HTML5</span>,{" "}
+                                                    <span style={{ color: "rgb(230, 0, 230)" }}>CSS3</span>,{" "}
+                                                    <span style={{ color: "rgb(230, 0, 230)" }}>JavaScript</span>
 
                                                     🚀 Recursos principais:
-                                                    ✅ Interface moderna e responsiva
-                                                    ✅ Renderização otimizada para SEO
-                                                    ✅ Carregamento rápido com Next.js
-                                                    ✅ Layout personalizável e dinâmico
+                                                    ✅ Layout moderno e responsivo<br />
+                                                    ✅ Seção de serviços com imagens<br />
+                                                    ✅ Depoimentos de clientes<br />
+                                                    ✅ Formulário de agendamento funcional<br />
+                                                    ✅ Foco em conversão e experiência do usuário
                                                 </p>
 
                                                 <h1 style={{
